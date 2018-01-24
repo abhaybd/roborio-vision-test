@@ -93,7 +93,7 @@ def draw_pred(image):
             input_image_shape: [image.size[1], image.size[0]],
             K.learning_phase(): 0
         })
-    print('Found {} boxes'.format(len(out_boxes)))
+    # print('Found {} boxes'.format(len(out_boxes)))
 
     font = ImageFont.truetype(
         font='font/FiraMono-Medium.otf',
@@ -115,7 +115,7 @@ def draw_pred(image):
         left = max(0, np.floor(left + 0.5).astype('int32'))
         bottom = min(image.size[1], np.floor(bottom + 0.5).astype('int32'))
         right = min(image.size[0], np.floor(right + 0.5).astype('int32'))
-        print(label, (left, top), (right, bottom))
+        # print(label, (left, top), (right, bottom))
 
         if top - label_size[1] >= 0:
             text_origin = np.array([left, top - label_size[1]])
@@ -132,5 +132,5 @@ def draw_pred(image):
             fill=colors[c])
         draw.text(text_origin, label, fill=(0, 0, 0), font=font)
         del draw
-    print('')
+    # print('')
     return image

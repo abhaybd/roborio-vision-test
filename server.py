@@ -69,15 +69,13 @@ def bytes_to_img(data, width, height, n_channels):
         global s
         s = data[i:i+n_channels]
         s = [int(i) for i in s]
-        img[y,x] = np.array(s)
+        img[y,x] = np.array(list(reversed(s)))
     return img
 
-def clamp(num, low, high):
-    return min(max(num,low),high)
+def rgb_to_bgr(rgb):
+    return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
 
-from IPython import get_ipython
-get_ipython().run_line_magic('matplotlib', 'auto')
-del get_ipython
+cv2.namedWindow('Robot')
 
 while True:
     # Recieve image dimensions
@@ -93,5 +91,6 @@ while True:
     global img_data
     raw_data = recieve(socket, img_width*img_height*n_channels)
     img_data = bytes_to_img(raw_data, img_width, img_height, n_channels)
-    drawn_img = yolo.draw_pred(img_data)
-    cv2.imshow('Robot', np.asarray(drawn_img))
+    drawn_img = np.asarray(yolo.draw_pred(img_data))
+    cv2.imshow('Robot', rgb_to_bgr(drawn_img))
+    cv2.waitKey(1)
