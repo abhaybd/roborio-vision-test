@@ -73,7 +73,7 @@ def bytes_to_img(data, width, height, n_channels):
     return img
 
 def rgb_to_bgr(rgb):
-    return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+    return rgb[:,:,::-1]
 
 cv2.namedWindow('Robot')
 

@@ -19,11 +19,8 @@ thread = threading.Thread(target = close_feed, args = ())
 thread.daemon = True
 thread.start()
 
-def bgr_to_rgb(bgr):
-    return cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-
-def rgb_to_bgr(rgb):
-    return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+def reverse_bytes(img):
+    return img[:,:,::-1]
 
 cv2.namedWindow('Image')
 
@@ -31,8 +28,8 @@ print('Starting live feed.')
 while running:
     r, img = cam.read()
     if r:
-        rgb = bgr_to_rgb(img)
+        rgb = reverse_bytes(img)
         drawn_img = np.asarray(yolo.draw_pred(rgb))
-        bgr = rgb_to_bgr(drawn_img)
+        bgr = reverse_bytes(drawn_img)
         cv2.imshow('Image', bgr)
         cv2.waitKey(1)
